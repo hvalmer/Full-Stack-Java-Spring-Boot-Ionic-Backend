@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 //mapeamento da classe produto @
 @Entity
 public class Produto implements Serializable {
@@ -29,6 +31,8 @@ public class Produto implements Serializable {
 	//fazendo as associações com o categoria(produto -> uma/muitas categorias)
 	//iniciar as associações com o ArrayList<>()
 	//o papel se chama categorias
+	
+	@JsonBackReference //omite a lista de categorias para cada produto
 	@ManyToMany
 	@JoinTable(name = "PROD_CAT", 
 		joinColumns = @JoinColumn(name = "produto_id"),
