@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.braincustom.fullstackproj.domain.Categoria;
 import com.braincustom.fullstackproj.domain.Cidade;
+import com.braincustom.fullstackproj.domain.Cliente;
+import com.braincustom.fullstackproj.domain.Endereco;
 import com.braincustom.fullstackproj.domain.Estado;
 import com.braincustom.fullstackproj.domain.Produto;
+import com.braincustom.fullstackproj.domain.enums.TipoCliente;
 import com.braincustom.fullstackproj.repositories.CategoriaRepository;
 import com.braincustom.fullstackproj.repositories.CidadeRepository;
+import com.braincustom.fullstackproj.repositories.ClienteRepository;
+import com.braincustom.fullstackproj.repositories.EnderecoRepository;
 import com.braincustom.fullstackproj.repositories.EstadoRepository;
 import com.braincustom.fullstackproj.repositories.ProdutoRepository;
 
@@ -35,6 +40,14 @@ public class FullstackprojApplication implements CommandLineRunner {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 
+	//dependência do objeto Cliente
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	//dependência do objeto Endereco
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(FullstackprojApplication.class, args);
 	}
@@ -80,6 +93,22 @@ public class FullstackprojApplication implements CommandLineRunner {
 		//salvar primeiro o Estado pq é um Estado para muitas Cidades
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3, c4));
+		
+		//instanciando os objetos Cliente
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@hotmail.com", "34554312345", TipoCliente.PESSOAFISICA);
+		
+		//instanciando o telefone
+		cli1.getTelefones().addAll(Arrays.asList("988782634", "32456778"));
+		
+		//instanciando o Endereco
+		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto. 1103", "Jardim", "66635-470", cli1, c1);
+		Endereco end2 = new Endereco(null, "Avenita Matos", "105", "Sala 800", "Centro", "66650-475", cli1, c2);
+		
+		//Cliente conhecendo os Enderecos
+		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+		
+		//objeto responsável por salvar os dados no BD
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2));
 	}
-
 }
