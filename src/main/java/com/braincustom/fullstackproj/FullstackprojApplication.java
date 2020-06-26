@@ -96,19 +96,22 @@ public class FullstackprojApplication implements CommandLineRunner {
 		
 		//instanciando os objetos Cliente
 		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@hotmail.com", "34554312345", TipoCliente.PESSOAFISICA);
-		
+		Cliente cli2 = new Cliente(null, "Santander S.A.", "santanderContato@santander.com", "90400888/0001-42", TipoCliente.PESSOAJURIDICA);
 		//instanciando o telefone
 		cli1.getTelefones().addAll(Arrays.asList("988782634", "32456778"));
+		cli2.getTelefones().addAll(Arrays.asList("40041111", "40042324"));
 		
 		//instanciando o Endereco
 		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto. 1103", "Jardim", "66635-470", cli1, c1);
 		Endereco end2 = new Endereco(null, "Avenita Matos", "105", "Sala 800", "Centro", "66650-475", cli1, c2);
+		Endereco end3 = new Endereco(null, "Avenida República", "345", "Galeria Cedro", "Bueno", "74865-420", cli2, c3);
 		
 		//Cliente conhecendo os Enderecos
 		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+		cli2.getEnderecos().addAll(Arrays.asList(end3));
 		
 		//objeto responsável por salvar os dados no BD
-		clienteRepository.saveAll(Arrays.asList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
 	}
 }

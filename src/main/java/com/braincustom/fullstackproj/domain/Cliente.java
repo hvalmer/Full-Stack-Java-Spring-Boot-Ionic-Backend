@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.braincustom.fullstackproj.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cliente implements Serializable {
@@ -29,6 +30,7 @@ public class Cliente implements Serializable {
 	private Integer tipo;
 	
 	//fazendo associações com muitos Endereços
+	@JsonManagedReference //A classe Cliente pode serializar a classe Endereco
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
@@ -46,7 +48,7 @@ public class Cliente implements Serializable {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		CpfOuCnpj = cpfOuCnpj;
+		this.CpfOuCnpj = cpfOuCnpj;
 		this.tipo = tipo.getCod();
 	}
 

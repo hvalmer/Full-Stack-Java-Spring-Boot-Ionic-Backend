@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,6 +30,7 @@ public class Endereco implements Serializable {
 	//chave estrangeira "cliente_id" corresponde a tabela Cliente dentro de Endereco
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
+	@JsonBackReference //a classe Endereco não pode serializar a classe Cliente, será omitido na serialização
 	private Cliente cliente;
 	
 	@ManyToOne
