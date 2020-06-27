@@ -11,12 +11,12 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.braincustom.fullstackproj.domain.enums.EstadoPagamento;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-//abstrac impede que seja instanciado objetos do tipo Pagamento 
-public abstract class Pagamento implements Serializable {
+	@Entity
+	@Inheritance(strategy = InheritanceType.JOINED)
+	//abstrac impede que seja instanciado objetos do tipo Pagamento 
+	public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,7 +27,7 @@ public abstract class Pagamento implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId
-	@JsonBackReference//os pedidos não serão serializados
+	@JsonIgnore
 	private Pedido pedido;
 	
 	public Pagamento() {
