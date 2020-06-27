@@ -13,6 +13,7 @@ import com.braincustom.fullstackproj.domain.Cidade;
 import com.braincustom.fullstackproj.domain.Cliente;
 import com.braincustom.fullstackproj.domain.Endereco;
 import com.braincustom.fullstackproj.domain.Estado;
+import com.braincustom.fullstackproj.domain.ItemPedido;
 import com.braincustom.fullstackproj.domain.Pagamento;
 import com.braincustom.fullstackproj.domain.PagamentoComBoleto;
 import com.braincustom.fullstackproj.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.braincustom.fullstackproj.repositories.CidadeRepository;
 import com.braincustom.fullstackproj.repositories.ClienteRepository;
 import com.braincustom.fullstackproj.repositories.EnderecoRepository;
 import com.braincustom.fullstackproj.repositories.EstadoRepository;
+import com.braincustom.fullstackproj.repositories.ItemPedidoRepository;
 import com.braincustom.fullstackproj.repositories.PagamentoRepository;
 import com.braincustom.fullstackproj.repositories.PedidoRepository;
 import com.braincustom.fullstackproj.repositories.ProdutoRepository;
@@ -63,6 +65,10 @@ public class FullstackprojApplication implements CommandLineRunner {
 	//dependência do objeto Pagamento
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	//dependência do objeto ItemPedido
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(FullstackprojApplication.class, args);
@@ -151,5 +157,25 @@ public class FullstackprojApplication implements CommandLineRunner {
 		//objeto responsável por salvar no BD
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pgto1, pgto2));
+		
+		//instanciando o ItemPedido
+		ItemPedido itp1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido itp2 = new ItemPedido(ped2, p3, 0.00, 2, 80.00);
+		ItemPedido itp3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		//associando o ped1 e ped2
+		ped1.getItens().addAll(Arrays.asList(itp1, itp2));
+		ped2.getItens().addAll(Arrays.asList(itp3));
+		
+		//associando os produtos com itens de pedido
+		p1.getItens().addAll(Arrays.asList(itp1));
+		p2.getItens().addAll(Arrays.asList(itp3));
+		p3.getItens().addAll(Arrays.asList(itp2));
+		
+		//objeto responsável por salvar no BD
+		itemPedidoRepository.saveAll(Arrays.asList(itp1, itp2, itp3));
+		
+		
+		
 	}
 }
