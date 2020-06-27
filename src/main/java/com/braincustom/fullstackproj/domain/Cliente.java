@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.braincustom.fullstackproj.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -41,6 +42,7 @@ public class Cliente implements Serializable {
 	
 	//fazendo associação com Pedido
 	@OneToMany(mappedBy = "cliente")
+	@JsonBackReference // os pedidos do cliente não vão ser serializados
 	private List<Pedido> pedidos = new ArrayList<>();
 	
 	//construtor vazio
