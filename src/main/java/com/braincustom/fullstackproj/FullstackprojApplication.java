@@ -1,5 +1,6 @@
 package com.braincustom.fullstackproj;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.braincustom.fullstackproj.domain.Cidade;
 import com.braincustom.fullstackproj.domain.Cliente;
 import com.braincustom.fullstackproj.domain.Endereco;
 import com.braincustom.fullstackproj.domain.Estado;
+import com.braincustom.fullstackproj.domain.Pagamento;
+import com.braincustom.fullstackproj.domain.PagamentoComBoleto;
+import com.braincustom.fullstackproj.domain.PagamentoComCartao;
+import com.braincustom.fullstackproj.domain.Pedido;
 import com.braincustom.fullstackproj.domain.Produto;
+import com.braincustom.fullstackproj.domain.enums.EstadoPagamento;
 import com.braincustom.fullstackproj.domain.enums.TipoCliente;
 import com.braincustom.fullstackproj.repositories.CategoriaRepository;
 import com.braincustom.fullstackproj.repositories.CidadeRepository;
 import com.braincustom.fullstackproj.repositories.ClienteRepository;
 import com.braincustom.fullstackproj.repositories.EnderecoRepository;
 import com.braincustom.fullstackproj.repositories.EstadoRepository;
+import com.braincustom.fullstackproj.repositories.PagamentoRepository;
+import com.braincustom.fullstackproj.repositories.PedidoRepository;
 import com.braincustom.fullstackproj.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -47,6 +55,14 @@ public class FullstackprojApplication implements CommandLineRunner {
 	//dependência do objeto Endereco
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	//dependência do objeto Pedido
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	//dependência do objeto Pagamento
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(FullstackprojApplication.class, args);
@@ -97,13 +113,14 @@ public class FullstackprojApplication implements CommandLineRunner {
 		//instanciando os objetos Cliente
 		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@hotmail.com", "34554312345", TipoCliente.PESSOAFISICA);
 		Cliente cli2 = new Cliente(null, "Santander S.A.", "santanderContato@santander.com", "90400888/0001-42", TipoCliente.PESSOAJURIDICA);
+		
 		//instanciando o telefone
 		cli1.getTelefones().addAll(Arrays.asList("988782634", "32456778"));
 		cli2.getTelefones().addAll(Arrays.asList("40041111", "40042324"));
 		
 		//instanciando o Endereco
 		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto. 1103", "Jardim", "66635-470", cli1, c1);
-		Endereco end2 = new Endereco(null, "Avenita Matos", "105", "Sala 800", "Centro", "66650-475", cli1, c2);
+		Endereco end2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "66650-475", cli1, c2);
 		Endereco end3 = new Endereco(null, "Avenida República", "345", "Galeria Cedro", "Bueno", "74865-420", cli2, c3);
 		
 		//Cliente conhecendo os Enderecos
@@ -113,5 +130,26 @@ public class FullstackprojApplication implements CommandLineRunner {
 		//objeto responsável por salvar os dados no BD
 		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
 		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		//instanciando o Pedido
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2020 10:32"), cli1, end1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2020 19:35"), cli2, end2);
+				
+		//instanciando o Pagamento
+		//Para instanciar, utilizar o new com uma das subclasses
+		Pagamento pgto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pgto1);
+		
+		Pagamento pgto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2020 00:00"), null);
+		ped2.setPagamento(pgto2);
+		
+		//associando o cli1 com os pedidos dele
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		//objeto responsável por salvar no BD
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pgto1, pgto2));
 	}
 }

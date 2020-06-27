@@ -34,10 +34,14 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
-	//coleção de Strings associada ao Cliente utilizando o Set que não aceita repetição
+	//coleção de Strings associada ao Cliente utilizando o Set(conjunto) que não aceita repetição
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
+	
+	//fazendo associação com Pedido
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	//construtor vazio
 	public Cliente() {
@@ -81,7 +85,7 @@ public class Cliente implements Serializable {
 	}
 
 	public void setCpfOuCnpj(String cpfOuCnpj) {
-		CpfOuCnpj = cpfOuCnpj;
+		this.CpfOuCnpj = cpfOuCnpj;
 	}
 
 	public TipoCliente getTipo() {
@@ -108,6 +112,14 @@ public class Cliente implements Serializable {
 		this.telefones = telefones;
 	}
 
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
