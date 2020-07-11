@@ -26,7 +26,7 @@ public class Cliente implements Serializable {
 	private Integer id;
 	private String nome;
 	private String email;
-	private String CpfOuCnpj;
+	private String cpfOuCnpj;
 	private Integer tipo;
 	
 	//fazendo associações com muitos Endereços
@@ -52,7 +52,7 @@ public class Cliente implements Serializable {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.CpfOuCnpj = cpfOuCnpj;
+		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = tipo.getCod();
 	}
 
@@ -81,11 +81,11 @@ public class Cliente implements Serializable {
 	}
 
 	public String getCpfOuCnpj() {
-		return CpfOuCnpj;
+		return cpfOuCnpj;
 	}
 
 	public void setCpfOuCnpj(String cpfOuCnpj) {
-		this.CpfOuCnpj = cpfOuCnpj;
+		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
 	public TipoCliente getTipo() {

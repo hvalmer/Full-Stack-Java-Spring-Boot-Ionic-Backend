@@ -25,4 +25,5 @@ public class PagamentoComCartao extends Pagamento {
 	public void setNumeroDeParcelas(Integer numeroDeParcelas) {
 		this.numeroDeParcelas = numeroDeParcelas;
 	}
+	//não necessita do hashCode() and equals() pois herda da superclasse Pagamentos
 }

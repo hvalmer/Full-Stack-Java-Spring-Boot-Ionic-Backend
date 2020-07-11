@@ -23,8 +23,8 @@ public class PagamentoComBoleto extends Pagamento {
 	//subclasse de Pagamento
 	public PagamentoComBoleto(Integer id, EstadoPagamento estado, Pedido pedido, Date dataVencimento, Date dataPagamento) {
 		super(id, estado, pedido);
-		this.dataVencimento = dataVencimento;
 		this.dataPagamento = dataPagamento;
+		this.dataVencimento = dataVencimento;
 	}
 
 	public Date getDataVencimento() {
@@ -42,4 +42,5 @@ public class PagamentoComBoleto extends Pagamento {
 	public void setDataPagamento(Date dataPagamento) {
 		this.dataPagamento = dataPagamento;
 	}
+	//não necessita do hashCode() and equals() pois herda da superclasse Pagamentos
 }
