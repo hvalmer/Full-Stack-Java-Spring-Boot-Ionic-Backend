@@ -1,6 +1,8 @@
 package com.braincustom.fullstackproj.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.braincustom.fullstackproj.domain.Categoria;
+import com.braincustom.fullstackproj.dto.CategoriaDTO;
 import com.braincustom.fullstackproj.services.CategoriaService;
 
 @RestController
@@ -44,10 +47,18 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	//Deletando na Categoria com 
+	//Deletando na Categoria com DELETE
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	//Endpoint que retorna TODAS as Categorias
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {//retorna lista de CategoriaDTO
+		List<Categoria> list = service.findAll();//busco Categoria do BD
+		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());//convertendo DTO
+		return ResponseEntity.ok().body(listDto);
 	}
 }

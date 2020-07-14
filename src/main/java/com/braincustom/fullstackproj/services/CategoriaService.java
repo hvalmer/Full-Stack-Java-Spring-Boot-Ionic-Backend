@@ -1,5 +1,6 @@
 package com.braincustom.fullstackproj.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.ObjectNotFoundException;
@@ -43,5 +44,10 @@ public class CategoriaService {
 		}catch(DataIntegrityViolationException e){
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos!");
 		}
+	}
+	
+	//lista de TODAS as Categorias
+	public List<Categoria> findAll(){
+		return reposi.findAll();
 	}
 }
