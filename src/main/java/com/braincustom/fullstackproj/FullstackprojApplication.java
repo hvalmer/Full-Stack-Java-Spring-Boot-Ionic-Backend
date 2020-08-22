@@ -179,8 +179,5 @@ public class FullstackprojApplication implements CommandLineRunner {
 		
 		//objeto responsável por salvar no BD
 		itemPedidoRepository.saveAll(Arrays.asList(itp1, itp2, itp3));
-		
-		
-		
 	}
 }
