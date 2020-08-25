@@ -36,8 +36,9 @@ public class CategoriaService {
 	
 	//método ATUALIZAÇÃO
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
-		return reposi.save(obj);
+		Categoria newObj = find(obj.getId());// criando o Cliente no BD
+		updateData(newObj, obj);// método auxiliar
+		return reposi.save(newObj);
 	}
 	
 	//método DELETE
@@ -65,5 +66,10 @@ public class CategoriaService {
 	//método auxiliar que instancia uma categoria apartir de um DTO
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(), objDto.getNome());
+	}
+	
+	//criando o método auxiliar, será private pq não precisa ser exposto
+		private void updateData(Categoria newObj, Categoria obj) {
+			newObj.setNome(obj.getNome());
 	}
 }
