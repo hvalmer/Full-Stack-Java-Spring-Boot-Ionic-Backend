@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -30,7 +31,10 @@ public class Cliente implements Serializable {
 	private Integer tipo;
 	
 	//fazendo associações com muitos Endereços
-	@OneToMany(mappedBy = "cliente")
+	/*
+	 * instrução do JPA de como vai se comportar a ação em cascata ALL
+	 * que diz toda operação que modificar um cliente, vou modificar os endereços também*/
+	@OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	//coleção de Strings associada ao Cliente utilizando o Set(conjunto) que não aceita repetição
