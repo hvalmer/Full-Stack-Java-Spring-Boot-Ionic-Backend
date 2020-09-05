@@ -68,7 +68,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
-	//Endpoint para pegar uma requisição e chamar o método de serviço
+	//Endpoint para pegar uma requisição e chamar o método de serviço //faz uma busca paginada de categorias
 	@RequestMapping(value="/page", method=RequestMethod.GET)
 	public ResponseEntity<Page<CategoriaDTO>> findPage(
 			//para que sejam parâmetros opicionais
