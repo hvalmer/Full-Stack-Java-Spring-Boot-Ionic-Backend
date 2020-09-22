@@ -95,16 +95,16 @@ public class FullstackprojApplication implements CommandLineRunner {
 		Produto p7 = new Produto(null, "TV true color", 1200.00);
 		Produto p8 = new Produto(null, "Roçadeira", 800.00);
 		Produto p9 = new Produto(null, "Abajour", 100.00);
-		Produto p10 = new Produto(null, "Pendente", 160.00);
+		Produto p10 = new Produto(null, "Pendente", 180.00);
 		Produto p11 = new Produto(null, "Shampoo", 90.00);
 
 		// associando as categorias com os produtos
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
 		cat2.getProdutos().addAll(Arrays.asList(p2, p4));
 		cat3.getProdutos().addAll(Arrays.asList(p5,p6));
-		cat4.getProdutos().addAll(Arrays.asList(p1,p2, p3, p7));
+		cat4.getProdutos().addAll(Arrays.asList(p1, p2, p3, p7));
 		cat5.getProdutos().addAll(Arrays.asList(p8));
-		cat6.getProdutos().addAll(Arrays.asList(p9,p10));
+		cat6.getProdutos().addAll(Arrays.asList(p9, p10));
 		cat7.getProdutos().addAll(Arrays.asList(p11));
 
 		// associando os produtos as suas categorias

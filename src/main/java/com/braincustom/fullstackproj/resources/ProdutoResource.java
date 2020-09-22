@@ -29,10 +29,10 @@ public class ProdutoResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	//Busca paginada por produtos
+	//Endpoint para busca paginada por produtos
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<ProdutoDTO>> findPage(
-			//para que sejam parâmetros opicionais
+			//para que sejam parâmetros opcionais
 			@RequestParam(value="nome", defaultValue="") String nome,
 			@RequestParam(value="categorias", defaultValue="0") String categorias,
 			@RequestParam(value="page", defaultValue="0") Integer page,

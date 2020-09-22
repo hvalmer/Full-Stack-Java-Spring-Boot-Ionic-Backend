@@ -12,9 +12,12 @@ import javax.persistence.OneToOne;
 
 import com.braincustom.fullstackproj.domain.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+	//@notations 
 	@Entity
 	@Inheritance(strategy = InheritanceType.JOINED)
+	@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")//campo adicional @type
 	//abstrac impede que seja instanciado objetos do tipo Pagamento 
 	public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
